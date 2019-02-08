@@ -119,29 +119,33 @@ public class Tokenizer {
 			int c;
 			int i = 0;
 			int j = 0;
+			int k = 0;
+			while((c=iS.read()) != -1) {
+				if(c != 64) {
+					token1[j] = (char) c;
+					j++;
+				}
 
-			c = read(buffer, iS);
+				if(c == 64) {
+					token2[i] = (char) c;
+					push_back(buffer, c);
+					i++;
+				}
 
-			if(c != 64) {
-				token1[j] = (char) c;
-				j++;
+				String b = new String(token1);
+
+				//System.out.println(" " + b + " ");
+
+				String d = new String(token2);
+
+				tokens.add(b);
+				i = 0;
+				j = 0;
+				token1 = new char[TOKENSIZE];
+				System.out.println(tokens.get(k));
+				k++;
 			}
 
-			if(c == 64) {
-				token2[i] = (char) c;
-				push_back(buffer, c);
-				i++;
-			}
-
-			String b = new String(token1);
-
-			System.out.println(b);
-
-			String d = new String(token2);
-
-			tokens.add(d);
-			token2 = new char[TOKENSIZE];
-			System.out.println(d);
 		} catch(Exception e) {
 			System.out.println(e);
 		} finally {
