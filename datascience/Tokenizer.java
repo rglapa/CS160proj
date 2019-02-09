@@ -9,32 +9,32 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class Tokenizer {
-	
-	
+
+
 	/*Using virtual input technique*/
 	/*Read one file at a time*/
 	/*Everything inside the file including words, blank spaces, special characters should be treated as a token
 	 *Multiple blanks continuously should be treated as a single blank .
 	 * eg: "Discovery       of an object"=> this sentence should be read as "Discovery of an object"   */
-	
+
 	public void sayHello()
 	{
 		System.out.println("Hello from tokenizer");
 	}
-	
+
 	private static int read(Stack<Integer> buffer, FileReader is) throws IOException {
 		int c = 0;
-		
+
 		try {
 			if(!buffer.empty()) c = buffer.pop();
 			else c = is.read();
 		} catch(Exception e) {
 			System.out.println(e);
 		}
-		
+
 		return c;
 	}
-	
+
 	private static void push_back(Stack<Integer> buffer, int c) {
 		buffer.push(c);
 	}
@@ -59,22 +59,22 @@ public class Tokenizer {
         for(int i=123;i<array.length;i++) {
             array[i] = false;
         }
-         
+
         for(int i = 0;i<byteList.length;i++) {
             if(array[byteList[i]] == true) {
                 char ch = (char) byteList[i];
                 token1 += ch;
             }
-             
+
             else if(array[byteList[i]] == false) {
                 if(token1 != "") {
                     manTokList.add(token1);
                 }
-                 
+
                 token1 = "";
                 char ch = (char) byteList[i];
                 token2 += ch;
-                 
+
                 if(token1 == "") {
                     manTokList.add(token2);
                 }
@@ -90,12 +90,12 @@ public class Tokenizer {
         for(String i: manTokList) {
             System.out.println(i);
         }
-	} 
-	
+	}
+
 	public static void readTokens2(String fileName) throws IOException {
 		ArrayList<String> tokens = new ArrayList<>();
 		boolean[] admissibleChars = new boolean[256];
-		
+
 		//set the numbers to true
 		for(int i = 0;i < 10; i++) {
 			admissibleChars[47 + i] = true;
@@ -105,40 +105,40 @@ public class Tokenizer {
 			admissibleChars[64 + i] = true;
 			admissibleChars[96 + i] = true;
 		}
-		
+
 		//change this to an array and implement the stack yourself if this is too slow
 		Stack<Integer> buffer = new Stack<Integer>();
 		FileReader iS = null;
-		
+
 		int TOKENSIZE = 50;
 		char[] token1 = new char[TOKENSIZE];
 		char[] token2 = new char[TOKENSIZE];
-		
+
 		try {
 			iS = new FileReader(fileName);
 			int c;
 			int i = 0;
 			int j = 0;
-			
+
 			c = read(buffer, iS);
-			
+
 			if(c != 64) {
 				token1[j] = (char) c;
 				j++;
 			}
-			
+
 			if(c == 64) {
 				token2[i] = (char) c;
 				push_back(buffer, c);
 				i++;
 			}
-			
+
 			String b = new String(token1);
-			
+
 			System.out.println(b);
-			
+
 			String d = new String(token2);
-			
+
 			tokens.add(d);
 			System.out.println(d);
 		} catch(Exception e) {
@@ -147,7 +147,7 @@ public class Tokenizer {
 			iS.close();
 		}
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 		if(args.length != 1) {
 			System.out.println("Invalid number of arguments. Program now terminating.");
