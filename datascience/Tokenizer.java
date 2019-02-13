@@ -17,11 +17,6 @@ public class Tokenizer {
 	 *Multiple blanks continuously should be treated as a single blank .
 	 * eg: "Discovery       of an object"=> this sentence should be read as "Discovery of an object"   */
 
-	public void sayHello()
-	{
-		System.out.println("Hello from tokenizer");
-	}
-
 	private static int read(Stack<Integer> buffer, FileReader is) throws IOException {
 		int c = 0;
 
