@@ -9,5 +9,7 @@ public class Main {
 
 		Tokenizer token =new Tokenizer();
 		token.readTokens2(args[0]);
+
+		
 	}
 }

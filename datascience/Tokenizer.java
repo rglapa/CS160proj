@@ -92,6 +92,19 @@ public class Tokenizer {
         }
 	}
 
+	public ArrayList tuple(ArrayList<String> tokens) {
+		ArrayList<ArrayList> tup = new ArrayList<ArrayList>();
+		ArrayList<String> indTup = new ArrayList<String>();
+		int index = 0;
+
+		for(int i = 0;i < tokens.size();i++) {
+			indTup.add(Integer.toString(index));
+		}
+
+
+		return tup;
+	}
+
 	public static void readTokens2(String fileName) throws IOException {
 		ArrayList<String> tokens = new ArrayList<>();
 		boolean[] admissibleChars = new boolean[256];
@@ -138,6 +151,8 @@ public class Tokenizer {
 
 				String d = new String(token2);
 
+				System.out.println("\"" + d + "\"");
+
 				tokens.add(b);
 				i = 0;
 				j = 0;
@@ -151,6 +166,7 @@ public class Tokenizer {
 		} finally {
 			iS.close();
 		}
+		System.out.println(tokens.size());
 	}
 
 	public static void main(String[] args) throws IOException {
