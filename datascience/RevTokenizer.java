@@ -28,7 +28,69 @@ public class RevTokenizer {
         buffer.pop();
     }
 
-    public static void main(String[] args) {
+    public static void readTokens2(String fileName) throws IOException {
+        ArrayList<String> tokens = new ArrayList<String>();
+        boolean[] admissibleChars = new boolean[256];
 
+        //set the numbers to true
+        for(int i = 0;i < 10; i++) {
+            admissibleChars[47 + i] = true;
+        }
+        //set the alphabet to true
+        for(int i = 0; i < 26; i++) {
+            admissibleChars[64 + i] = true;
+            admissibleChars[96 + i] = true;
+        }
+
+        //change this to an array and implement the stack yourself if this is too slow
+        Stack<Integer> buffer = new Stack<Integer>();
+        FileReader iS = null;
+
+        int TOKENSIZE = 50;
+        char[] token1 = new char[TOKENSIZE];
+        char[] token2 = new char[TOKENSIZE];
+
+        try {
+            iS = new FileReader(fileName);
+            int c;
+            int i = 0, j = 0, k = 0;
+
+            while((c=iS.read()) != -1) {
+                if(c != 64) {
+                    token1[j] = (char) c;
+                    j++;
+                }
+
+                if(c == 64) {
+                    token2[i] = (char) c;
+                    push_back(buffer, c);
+                    i++;
+                }
+
+                String b = new String(token1);
+
+                String d = new String(token2);
+                System.out.println("\"" + d + "\"");
+
+                tokens.add(b);
+                i = 0;
+                j = 0;
+                token1 = new char[TOKENSIZE];
+                System.out.println(tokens.get(k));
+                k++;
+            }
+        } catch(Exception e) {
+            System.out.println(e);
+        } finally {
+            iS.close();
+        }
+        System.out.println(tokens.size());
+    }
+    public static void main(String[] args) throws IOException {
+        if(args.length != 1) {
+            System.out.println("Invalid number of arguments. Program now terminating.");
+            System.exit(0);
+        }
+        readTokens2(args[0]);
     }
 }
