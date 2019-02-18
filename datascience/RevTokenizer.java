@@ -5,11 +5,28 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharacterCodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
 public class RevTokenizer {
+
+    public static boolean isPureAscii(String v) {
+        byte byteArray[] = v.getBytes();
+        CharsetDecoder d = Charset.forName("US-ASCII").newDecoder();
+        try {
+            CharBuffer r = d.decode(ByteBuffer.wrap(byteArray));
+            r.toString();
+        } catch(CharacterCodingException e) {
+            return false;
+        }
+        return true;
+    }
 
     private static int read(Stack<Integer> buffer, FileReader is) throws IOException {
         int c = 0;
