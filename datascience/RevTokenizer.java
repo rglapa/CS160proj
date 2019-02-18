@@ -28,6 +28,8 @@ public class RevTokenizer {
         return true;
     }
 
+
+
     private static int read(Stack<Integer> buffer, FileReader is) throws IOException {
         int c = 0;
 
@@ -70,9 +72,16 @@ public class RevTokenizer {
         try {
             iS = new FileReader(fileName);
             int c;
+            int e = iS.read();
             int i = 0, j = 0, k = 0;
 
+            if(isPureAscii(Integer.toString(e)) == false) {
+                System.out.println("Character is not ASCII");
+                System.exit(0);
+            }
+
             while((c=iS.read()) != -1) {
+
                 if(c != 64) {
                     token1[j] = (char) c;
                     j++;
