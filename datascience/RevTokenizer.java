@@ -110,7 +110,7 @@ public class RevTokenizer {
         } finally {
             iS.close();
         }
-        System.out.println(tokens.size());
+        System.out.println(tokens.size() + " 1 ");
     }
     public static void main(String[] args) throws IOException {
         if(args.length != 1) {
