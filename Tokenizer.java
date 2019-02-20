@@ -60,13 +60,14 @@ public class Tokenizer {
 				if(buffer.peek().equals("@")) {
 					// if there are letters after . (like example@test.com)
 					if(ASCII[(int) line.charAt(i + 1)] == true) {
-						temp = temp + line.substring(i, i + 1);
+						buffer.push(temp); // push in letters before .
+						buffer.push(line.substring(i, i + 1)); // push in .
+						temp = ""; // wipe
 						emailDetected = true;
 					}
 					// no letters after, get rid of @ (like example@test. Hello)
 					else
-						if(!temp.contains("."))
-							buffer.pop();
+						buffer.pop();
 				}
 			}
 			
@@ -74,26 +75,21 @@ public class Tokenizer {
 			else {
 				// store string as ready to be tokenized & clean up temp
 				if(temp.length() > 0) {
-					if(!emailDetected) {
-						buffer.push(temp);
-						temp = "";
-						tokenRdy = true;
-					}
-					else {
-						buffer.push(temp);
-						temp = "";
-						tokenRdy = true;
-					}
+					buffer.push(temp);
+					temp = "";
+					tokenRdy = true;
 				}
 			}
 			
 			if(tokenRdy) {
 				if(emailDetected) {
 					// pop 3 times because emails have 3 parts (test @ mail.com)
-					String tail = buffer.pop(); // mail.com
-					String mid = buffer.pop(); // @
-					String head = buffer.pop(); // test
-					String email = head + mid + tail;
+					String afterDot = buffer.pop(); // mail.com
+					String dot = buffer.pop(); // @
+					String beforeDot = buffer.pop(); // test
+					String at = buffer.pop();
+					String beforeAt = buffer.pop();
+					String email = beforeAt + at + beforeDot + dot + afterDot;
 					tokens.add(email);
 					emailDetected = false;
 				}
@@ -120,7 +116,7 @@ public class Tokenizer {
 		//br.close();
 		//fr.close();
 	
-		test.tokenizeLine("first.last@mail. com");
+		test.tokenizeLine("h.t@t.c");
 		
 		ArrayList<String> tokens = test.getTokens();
 		for(int i = 0; i < tokens.size(); i++){
